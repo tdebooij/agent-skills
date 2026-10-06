@@ -13,6 +13,7 @@ A personal, interactive review workflow — one issue at a time, in severity ord
 - Argument is "current" or omitted and a branch is checked out that isn't main → review that branch's diff against main.
 - Otherwise ask Tim for a PR number, branch, or GitHub link.
 - The PR must already exist on GitHub — use `gh pr view`/`gh pr diff` to pull the diff and metadata, don't just diff local git state.
+- Check the PR branch out locally (`gh pr checkout <n>`) so the desktop diff pane shows its changes. If the working tree is dirty, ask Tim before switching branches.
 
 ## 2. Review
 
@@ -36,7 +37,13 @@ Then present findings **one at a time**, most severe first (blocking → major �
 - A concise description of the issue (file:line, what's wrong, why it matters).
 - The realistic options for fixing it (usually 2-3, including "leave as-is" when that's defensible). Lead with the option you'd actually pick and say why.
 
-Present the fix options as a multiple-choice question (e.g. the built-in AskUserQuestion tool) rather than plain text, when the environment supports it. Do not move on to the next issue, or start implementing, until Tim has answered — no proceeding on an assumed or default choice.
+**Show the code before asking.** When `mcp__ccd_view__show_pane` is available (Claude desktop app), call it before each question so Tim sees the code being discussed:
+- `pane: "diff"`, `path: <file>` — when the issue is in changed lines.
+- `pane: "file"`, `path: <file>`, `line: <n>` — when it's about unchanged surrounding code.
+
+Do the same whenever you're uncertain about a piece of code and want Tim to look at it: show it, then say what you're unsure about. Without the tool, fall back to `file:line` links plus a short fenced snippet.
+
+Present the fix options as a multiple-choice question (e.g. the built-in AskUserQuestion tool) rather than plain text, when the environment supports it. Give each code-changing option a `preview` holding the proposed change as a small unified diff, so the options can be compared side by side. Do not move on to the next issue, or start implementing, until Tim has answered — no proceeding on an assumed or default choice.
 
 Wait for Tim's choice. If he specifies something other than a listed option, treat that as the direction — implement it. Once implemented, show a brief confirmation of what changed, then move to the next issue. Don't batch multiple issues into one turn.
 
