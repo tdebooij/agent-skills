@@ -43,7 +43,7 @@ Then present findings **one at a time**, most severe first (blocking → major �
 
 Do the same whenever you're uncertain about a piece of code and want Tim to look at it: show it, then say what you're unsure about. Without the tool, fall back to `file:line` links plus a short fenced snippet.
 
-Present the fix options as a multiple-choice question (e.g. the built-in AskUserQuestion tool) rather than plain text, when the environment supports it. Give each code-changing option a `preview` holding the proposed change as a small unified diff, so the options can be compared side by side. Do not move on to the next issue, or start implementing, until Tim has answered — no proceeding on an assumed or default choice.
+Present the fix options as a multiple-choice question (e.g. the built-in AskUserQuestion tool) rather than plain text, when the environment supports it. Give each code-changing option a `preview` holding the proposed change as a small unified diff, so the options can be compared side by side. The preview is rendered as markdown, so always wrap the diff in a fenced code block tagged `diff` (three backticks + `diff` on the first line, three backticks on the last) — bare `-`/`+` lines otherwise render as bullet lists and indented lines as stray code blocks. Do not move on to the next issue, or start implementing, until Tim has answered — no proceeding on an assumed or default choice.
 
 Wait for Tim's choice. If he specifies something other than a listed option, treat that as the direction — implement it. Once implemented, show a brief confirmation of what changed, then move to the next issue. Don't batch multiple issues into one turn.
 
